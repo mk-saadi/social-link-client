@@ -7,7 +7,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 // import { useRouter } from 'next/router';
 
 const SignUp = () => {
-    const imgbbApiKey = process.env.NEXT_IMAGE_UPLOAD_TOKEN; // Replace with your ImgBB API key
+    const imgbbApiKey = '35693cbbb9e1a46748a3b83e16106023'; // Replace with your ImgBB API key
     // const router = useRouter();
     console.log(imgbbApiKey)
 
@@ -52,9 +52,9 @@ const SignUp = () => {
                 body: JSON.stringify({ email }),
             });
 
-            const { user } = await resUserExists.json();
+            await resUserExists.json();
 
-            if (resUserExists.status === 409) {
+            if (resUserExists.status === 400) {
                 setError("User already exists.");
                 return;
             }
@@ -72,7 +72,8 @@ const SignUp = () => {
                     name,
                     email,
                     password,
-                    photo: imageUrl,
+                    image: imageUrl,
+                    isVerified: false,
                 };
 
                 const registrationResponse = await fetch('http://localhost:7000/users', {
@@ -83,7 +84,7 @@ const SignUp = () => {
                     body: JSON.stringify(registrationData),
                 });
 
-                if (registrationResponse.ok) {
+                if (registrationResponse.ok ) {
                     setName('');
                     setEmail('');
                     setPhoto(null);

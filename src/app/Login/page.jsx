@@ -4,14 +4,21 @@ import { TextField } from '@mui/material';
 import Link from 'next/link';
 // import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
+    const [passwordShow, setPasswordShow] = useState(false);
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
 
     // const router = useRouter();
+
+    const handlePasswordShow = () => {
+        setPasswordShow(!passwordShow)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -39,7 +46,13 @@ const Login = () => {
                 <h4 className=' text-2xl font-semibold text-[#6A67FF]'>Login</h4>
                 <form onSubmit={(e) => handleSubmit(e)} className='flex flex-col justify-center gap-5'>
                     <TextField fullWidth label="Email" id="fullWidth" onChange={(e) => setEmail(e.target.value)} type="email" name='email' className=' border rounded-md' />
-                    <TextField fullWidth label="Password" id="fullWidth" onChange={(e) => setPassword(e.target.value)} type="password" name='password' className=' border rounded-md' />
+                    <div className='relative'>
+                        <TextField fullWidth label="Password" id="fullWidth" onChange={(e) => setPassword(e.target.value)} type={passwordShow ? `text` : `password`} name='password' className='border rounded-md' />
+                        {passwordShow ?
+                            <VisibilityIcon onClick={() => handlePasswordShow()} className='absolute right-5 top-4 cursor-pointer' />
+                            : <VisibilityOffIcon onClick={() => handlePasswordShow()} className='absolute right-5 top-4 cursor-pointer' />
+                        }
+                    </div>
                     {error && (<div>
                         <span className='text-red-700 text-md text-lg'>{error}</span>
                     </div>)}
