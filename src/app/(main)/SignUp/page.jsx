@@ -18,17 +18,6 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        console.log(name)
-
-        // if (!name || !email || !password) {
-        //     setError('All field is required');
-        //     return
-        // } else {
-        //     setError('')
-        // }
-
-        // try {
-
         //     const resUserExists = await fetch("api/userExists", {
         //         method: "POST",
         //         headers: {
@@ -64,7 +53,18 @@ const SignUp = () => {
         //     }
         //     else {
         //         console.log("User registration Failed.")
-        //     }
+   
+        console.log(name)
+
+        // if (!name || !email || !password) {
+        //     setError('All field is required');
+        //     return
+        // } else {
+        //     setError('')
+        // }
+
+        // try {
+     //     }
         // } catch (error) {
         //     console.log("Error during registration:", error);
         // }
