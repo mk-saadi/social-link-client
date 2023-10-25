@@ -18,56 +18,56 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        //     const resUserExists = await fetch("api/userExists", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({ email }),
-        //     });
-
-        //     const { user } = await resUserExists.json();
-
-        //     if (user) {
-        //         setError("User already exists.");
-        //         return;
-        //     }
-
-
-        //     const res = await fetch('api/register', {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //         },
-        //         body: JSON.stringify({
-        //             name,
-        //             email,
-        //             password,
-        //         }),
-        //     });
-        //     if (res.ok) {
-        //         console.log('res ok')
-        //         const form = e.target;
-        //         form.reset();
-        //         router.push('/Login')
-        //     }
-        //     else {
-        //         console.log("User registration Failed.")
-   
         console.log(name)
 
-        // if (!name || !email || !password) {
-        //     setError('All field is required');
-        //     return
-        // } else {
-        //     setError('')
-        // }
+        if (!name || !email || !password) {
+            setError('All field is required');
+            return
+        } else {
+            setError('')
+        }
 
-        // try {
-     //     }
-        // } catch (error) {
-        //     console.log("Error during registration:", error);
-        // }
+        try {
+
+            const resUserExists = await fetch("api/userExists", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const { user } = await resUserExists.json();
+
+            if (user) {
+                setError("User already exists.");
+                return;
+            }
+
+
+            const res = await fetch('api/register', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password,
+                }),
+            });
+            if (res.ok) {
+                console.log('res ok')
+                const form = e.target;
+                form.reset();
+                router.push('/Login')
+            }
+            else {
+                console.log("User registration Failed.")
+            }
+        } catch (error) {
+            console.log("Error during registration:", error);
+        }                            
     }
 
 
