@@ -46,7 +46,7 @@ const Login = () => {
                     <input type="submit" value={'Login'} className='bg-[#6A67FF] text-white py-3 cursor-pointer font-semibold rounded-md hover:bg-opacity-80' />
                 </form>
                 <div>
-                    <p className='text-center'>Don't have't your account please <Link className='text-blue-500 underline ' href={'/SignUp'}>Register</Link></p>
+                    <p className='text-center'>Don't have't your account please <Link className='text-blue-500 underline ' href={'/signUp'}>Register</Link></p>
                 </div>
             </div>
         </div>
