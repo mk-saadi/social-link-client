@@ -1,43 +1,78 @@
 "use client";
+
 import { TextField } from "@mui/material";
-// import { signIn } from 'next-auth/react';
 import Link from "next/link";
-// import { useRouter } from 'next/navigation';
 import React, { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import axios from "axios";
 
 const Login = () => {
 	const [passwordShow, setPasswordShow] = useState(false);
-
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
-
-	// const router = useRouter();
 
 	const handlePasswordShow = () => {
 		setPasswordShow(!passwordShow);
 	};
+	const [formData, setFormData] = useState({
+		email: "",
+		password: "",
+	});
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-
-		// try {http://localhost:7000/users/login
-		//     const res = await signIn("credentials", {
-		//         email, password, redirect: false,
-		//     });
-
-		//     if(res.error){
-		//         setError("Invalid Credentials");
-		//         return;
-		//     }
-
-		//     router.replace("/")
-		// } catch (error) {
-		//     console.log(error);
-		// }
+	const handleChange = (event) => {
+		setFormData({
+			...formData,
+			[event.target.name]: event.target.value,
+		});
 	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+
+		axios
+			.post("http://localhost:7000/users/login", formData)
+			.then((response) => {
+				const responseData = JSON.parse(response.config.data);
+				const userEmail = responseData.email;
+
+				localStorage.setItem("email", userEmail);
+				window.Location.reload();
+
+				console.log("Login successful:", userEmail);
+			})
+			.catch((error) => {
+				setError(error);
+				console.error("Login failed:", error);
+			});
+	};
+
+	axios
+		.get("http://localhost:7000/users")
+		.then((response) => {
+			const userEmail = localStorage.getItem("email");
+
+			const matchingUser = response.data.find(
+				(user) => user.email === userEmail
+			);
+
+			if (matchingUser) {
+				localStorage.setItem("email", matchingUser.email);
+				localStorage.setItem("name", matchingUser.name);
+				localStorage.setItem("image", matchingUser.image);
+				localStorage.setItem("isVerified", matchingUser.isVerified);
+				window.location.href = "/";
+
+				console.log(
+					"Data of matching user stored in localStorage:",
+					matchingUser
+				);
+			} else {
+				console.log("No matching user found.");
+			}
+		})
+		.catch((error) => {
+			console.error("Error fetching user data:", error);
+		});
 
 	return (
 		<div className='container mx-auto min-h-screen'>
@@ -49,14 +84,15 @@ const Login = () => {
 					Login
 				</h4>
 				<form
-					onSubmit={(e) => handleSubmit(e)}
+					onSubmit={handleSubmit}
 					className='flex flex-col justify-center gap-5'
 				>
 					<TextField
 						fullWidth
 						label='Email'
 						id='fullWidth'
-						onChange={(e) => setEmail(e.target.value)}
+						value={formData.email}
+						onChange={handleChange}
 						type='email'
 						name='email'
 						className=' border rounded-md'
@@ -66,7 +102,8 @@ const Login = () => {
 							fullWidth
 							label='Password'
 							id='fullWidth'
-							onChange={(e) => setPassword(e.target.value)}
+							value={formData.password}
+							onChange={handleChange}
 							type={passwordShow ? `text` : `password`}
 							name='password'
 							className='border rounded-md'
