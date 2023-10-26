@@ -91,7 +91,6 @@ const SignUp = () => {
 							localStorage.setItem("email", userEmail);
 							alert("Registration successful");
 
-							window.location.href = "/";
 							console.log("Registration successful:", userEmail);
 						})
 						.catch((registrationError) => {
@@ -127,6 +126,8 @@ const SignUp = () => {
 				localStorage.setItem("email", matchingUser.email);
 				localStorage.setItem("name", matchingUser.name);
 				localStorage.setItem("image", matchingUser.image);
+				localStorage.setItem("image", matchingUser.isVerified);
+				window.location.href = "/";
 			} else {
 				console.log("No matching user found.");
 			}
