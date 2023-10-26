@@ -9,7 +9,7 @@ import axios from "axios";
 import imageCompression from "browser-image-compression";
 
 const SignUp = () => {
-	const imgbbApiKey = "5617d55658537c83fee4ef9a7cffb921";
+	const imgbbApiKey = "35693cbbb9e1a46748a3b83e16106023";
 	console.log(imgbbApiKey);
 
 	const [passwordShow, setPasswordShow] = useState(false);
