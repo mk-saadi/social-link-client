@@ -15,7 +15,9 @@ const Pages = () => {
 	const [items, setPosts] = useState([]);
 
 	const getPosts = async () => {
-		const response = await axios.get("http://localhost:7000/posts");
+		const response = await axios.get(
+			"https://social-link-server-liard.vercel.app/posts"
+		);
 		return response.data;
 	};
 

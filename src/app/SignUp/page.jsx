@@ -82,7 +82,10 @@ const SignUp = () => {
 					formData.isVerified = false;
 
 					axios
-						.post("http://localhost:7000/users", formData)
+						.post(
+							"https://social-link-server-liard.vercel.app/users",
+							formData
+						)
 						.then((response) => {
 							const responseData = JSON.parse(
 								response.config.data
@@ -91,15 +94,15 @@ const SignUp = () => {
 							localStorage.setItem("email", userEmail);
 							alert("Registration successful");
 
-							window.Location.reload();
 							console.log("Registration successful:", userEmail);
+							window.Location.reload();
 						})
 						.catch((registrationError) => {
 							console.error(
 								"Registration failed:",
 								registrationError
 							);
-							alert("Registration failed please try again");
+							// alert("Registration failed please try again");
 						});
 				} else {
 					alert("Please try again");
@@ -115,7 +118,7 @@ const SignUp = () => {
 	};
 
 	axios
-		.get("http://localhost:7000/users")
+		.get("https://social-link-server-liard.vercel.app/users")
 		.then((response) => {
 			const userEmail = localStorage.getItem("email");
 
