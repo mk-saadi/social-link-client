@@ -30,7 +30,10 @@ const Login = () => {
 		event.preventDefault();
 
 		axios
-			.post("http://localhost:7000/users/login", formData)
+			.post(
+				"https://social-link-server-liard.vercel.app/users/login",
+				formData
+			)
 			.then((response) => {
 				const responseData = JSON.parse(response.config.data);
 				const userEmail = responseData.email;
@@ -47,7 +50,7 @@ const Login = () => {
 	};
 
 	axios
-		.get("http://localhost:7000/users")
+		.get("https://social-link-server-liard.vercel.app/users")
 		.then((response) => {
 			const userEmail = localStorage.getItem("email");
 
